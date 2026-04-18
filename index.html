@@ -911,6 +911,22 @@
             .chatbot-container { right: 5px; left: 5px; }
             .chatbot-messages { height: 250px; }
         }
+
+        /* Instagram grid responsive */
+        @media (max-width: 700px) {
+            .container > div[style*="grid-template-columns: repeat(4"] {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
+        @media (max-width: 400px) {
+            .container > div[style*="grid-template-columns: repeat(4"] {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 10px !important;
+            }
+            .container > div[style*="grid-template-columns: repeat(4"] > a span:first-child {
+                font-size: 35px !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1086,20 +1102,35 @@
             <!-- INSTAGRAM FEED -->
             <div style="margin-bottom: 40px;">
                 <h4 style="color: #FFD700; margin-bottom: 20px; font-size: 1.1rem; font-weight: 500; text-shadow: 0 0 15px rgba(255,215,0,0.5);">Síguenos en Instagram</h4>
-                <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; max-width: 800px; margin: 0 auto;">
-                    <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="display: flex; align-items: center; justify-content: center; width: 150px; height: 150px; border-radius: 15px; transition: all 0.3s; flex: 0 0 auto; background: linear-gradient(135deg, #5D4037, #8B6F47);" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 10px 30px rgba(212,165,116,0.4)'">
-                        <span style="font-size:60px;">☕</span>
-                    </a>
-                    <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="display: flex; align-items: center; justify-content: center; width: 150px; height: 150px; border-radius: 15px; transition: all 0.3s; flex: 0 0 auto; background: linear-gradient(135deg, #FF6B6B, #FF8E53);" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 10px 30px rgba(212,165,116,0.4)'">
-                        <span style="font-size:60px;">🍨</span>
-                    </a>
-                    <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="display: flex; align-items: center; justify-content: center; width: 150px; height: 150px; border-radius: 15px; transition: all 0.3s; flex: 0 0 auto; background: linear-gradient(135deg, #D4A574, #FFD700);" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 10px 30px rgba(212,165,116,0.4)'">
-                        <span style="font-size:60px;">🍰</span>
-                    </a>
-                    <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="display: flex; align-items: center; justify-content: center; width: 150px; height: 150px; border-radius: 15px; transition: all 0.3s; flex: 0 0 auto; background: linear-gradient(135deg, #25D366, #128C7E);" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 10px 30px rgba(212,165,116,0.4)'">
-                        <span style="font-size:60px;">🥤</span>
-                    </a>
-                </div>
+                <!-- WIDGET INSTAGRAM -->
+<div style="max-width: 800px; margin: 0 auto; padding: 20px; background: rgba(26,21,18,0.8); border-radius: 25px; border: 2px solid #D4A574;">
+    <h4 style="color: #FFD700; text-align: center; margin-bottom: 25px; font-size: 1.3rem; font-weight: 600;">Síguenos en Instagram</h4>
+    
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;">
+        <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="display: flex; flex-direction: column; align-items: center; justify-content: center; aspect-ratio: 1; border-radius: 20px; transition: all 0.3s; background: linear-gradient(135deg, #5D4037, #8B6F47); text-decoration: none;" onmouseover="this.style.transform='scale(1.08)';this.style.boxShadow='0 15px 40px rgba(212,165,116,0.5)'">
+            <span style="font-size: 50px;">☕</span>
+            <span style="color: white; font-size: 12px; margin-top: 8px; font-weight: 600;">Café</span>
+        </a>
+        <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="display: flex; flex-direction: column; align-items: center; justify-content: center; aspect-ratio: 1; border-radius: 20px; transition: all 0.3s; background: linear-gradient(135deg, #E91E63, #FF5722); text-decoration: none;" onmouseover="this.style.transform='scale(1.08)';this.style.boxShadow='0 15px 40px rgba(212,165,116,0.5)'">
+            <span style="font-size: 50px;">🍨</span>
+            <span style="color: white; font-size: 12px; margin-top: 8px; font-weight: 600;">Helados</span>
+        </a>
+        <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="display: flex; flex-direction: column; align-items: center; justify-content: center; aspect-ratio: 1; border-radius: 20px; transition: all 0.3s; background: linear-gradient(135deg, #D4A574, #FFD700); text-decoration: none;" onmouseover="this.style.transform='scale(1.08)';this.style.boxShadow='0 15px 40px rgba(212,165,116,0.5)'">
+            <span style="font-size: 50px;">🍰</span>
+            <span style="color: #3E2723; font-size: 12px; margin-top: 8px; font-weight: 600;">Postres</span>
+        </a>
+        <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="display: flex; flex-direction: column; align-items: center; justify-content: center; aspect-ratio: 1; border-radius: 20px; transition: all 0.3s; background: linear-gradient(135deg, #2196F3, #00BCD4); text-decoration: none;" onmouseover="this.style.transform='scale(1.08)';this.style.boxShadow='0 15px 40px rgba(212,165,116,0.5)'">
+            <span style="font-size: 50px;">🥤</span>
+            <span style="color: white; font-size: 12px; margin-top: 8px; font-weight: 600;">Bebidas</span>
+        </a>
+    </div>
+    
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #E1306C, #C13584); color: white; padding: 12px 25px; border-radius: 25px; font-weight: 600; font-size: 14px; text-decoration: none; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 10px 30px rgba(225,48,108,0.5)'">
+            <i class="fab fa-instagram"></i> @tuwebpro360
+        </a>
+    </div>
+</div>
             </div>
             
             <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 30px;">
