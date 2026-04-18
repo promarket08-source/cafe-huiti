@@ -809,29 +809,103 @@
             transform: scale(1.15);
         }
 
-        /* RESPONSIVE */
+        /* RESPONSIVE - Notebook (1024px - 1366px) */
+        @media (max-width: 1366px) {
+            .hero-title { font-size: 3.5rem; }
+            .container { max-width: 1100px; }
+        }
+
         @media (max-width: 1200px) {
             .hero-content { grid-template-columns: 1fr; text-align: center; }
             .hero-text { order: 2; }
             .hero-visual { order: 1; margin-bottom: 40px; }
             .hero-description { margin: 0 auto 40px; }
             .hero-buttons { justify-content: center; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* Tablet (768px - 1024px) */
+        @media (max-width: 1024px) {
+            .hero-title { font-size: 3rem; }
+            .container { max-width: 900px; }
+            .hero-content { gap: 40px; padding: 100px 0; }
+            .instagram-grid { grid-template-columns: repeat(3, 1fr); }
+            .instagram-item { aspect-ratio: 1; }
+            .chatbot-container { width: 350px; }
+            .chatbot-messages { height: 300px; }
         }
 
         @media (max-width: 900px) {
-            .hero-title { font-size: 3rem; }
+            .hero-title { font-size: 2.5rem; }
             .instagram-grid { grid-template-columns: repeat(2, 1fr); }
+            .nav-links { display: none; }
+            .section-title { font-size: 2rem; }
+            .stats-bar { padding: 50px 20px; }
+            .stat-item { padding: 20px; }
+            .stat-number { font-size: 2.5rem; }
         }
 
-        @media (max-width: 700px) {
-            .hero-title { font-size: 2.5rem; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .nav-links { display: none; }
+        /* Celular/Móvil (320px - 767px) */
+        @media (max-width: 767px) {
+            .hero-title { font-size: 2rem; line-height: 1.2; }
+            .hero-description { font-size: 1rem; }
+            .hero-badge { font-size: 0.8rem; padding: 8px 15px; }
+            .container { padding: 0 15px; max-width: 100%; }
+            
+            .btn { padding: 14px 24px; font-size: 0.9rem; }
+            .btn-primary { padding: 14px 24px; }
+            
+            .hero-content { gap: 30px; padding: 80px 0; }
+            .hero-buttons { flex-direction: column; gap: 15px; }
+            
+            .stats-grid { grid-template-columns: 1fr 1fr; gap: 15px; padding: 40px 15px; }
+            .stat-item { padding: 15px; }
+            .stat-number { font-size: 1.8rem; }
+            .stat-label { font-size: 0.8rem; }
+            
+            .instagram-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .instagram-item { aspect-ratio: 1; }
+            
             .chatbot-container {
                 right: 10px;
                 left: 10px;
                 width: auto;
+                bottom: 90px;
             }
+            .chatbot-messages { height: 280px; }
+            .chatbot-toggle { right: 15px; bottom: 20px; }
+            .whatsapp-float { left: 15px; bottom: 20px; }
+            
+            .section-title { font-size: 1.5rem; }
+            
+            /* Contacto - grid a columna */
+            .container > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; gap: 20px !important; }
+            .container > div[style*="grid-template-columns"] > div { padding: 20px !important; }
+            
+            /* Instagram images más pequeñas en móvil */
+            .container > div[style*="gap: 15px"] > a,
+            .container > div[style*="gap: 15px"] > div > a { width: 100px !important; height: 100px !important; }
+            
+            /* Carta */
+            .container > div[style*="padding: 50px"] { padding: 30px 20px !important; }
+            .container > div[style*="padding: 50px"] > h2 { font-size: 1.8rem !important; }
+            .container > div[style*="padding: 50px"] > a { padding: 14px 30px !important; font-size: 1rem !important; }
+            
+            /* Footer */
+            .container > div[style*="text-align: center"] { padding: 40px 15px 20px; }
+            .container > div[style*="text-align: center"] svg { width: 35px !important; height: 35px !important; }
+            .container > div[style*="text-align: center"] span { font-size: 1.5rem !important; }
+        }
+
+        /* Celular pequeño */
+        @media (max-width: 400px) {
+            .hero-title { font-size: 1.7rem; }
+            .hero-description { font-size: 0.9rem; letter-spacing: 1px; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .stat-card { padding: 15px; }
+            .stat-number { font-size: 1.5rem; }
+            .chatbot-container { right: 5px; left: 5px; }
+            .chatbot-messages { height: 250px; }
         }
     </style>
 </head>
@@ -1008,18 +1082,18 @@
             <!-- INSTAGRAM FEED -->
             <div style="margin-bottom: 40px;">
                 <h4 style="color: #FFD700; margin-bottom: 20px; font-size: 1.1rem; font-weight: 500; text-shadow: 0 0 15px rgba(255,215,0,0.5);">Síguenos en Instagram</h4>
-                <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-                    <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="display: block; width: 180px; height: 180px; border-radius: 20px; overflow: hidden; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 10px 30px rgba(212,165,116,0.4)'">
-                        <img src="https://plus.unsplash.com/premium_photo-1673264933212-d788e360f08c?w=400&h=400&fit=crop" style="width: 100%; height: 100%; object-fit: cover;" alt="Café">
+                <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; max-width: 800px; margin: 0 auto;">
+                    <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="display: block; width: 150px; height: 150px; border-radius: 15px; overflow: hidden; transition: all 0.3s; flex: 0 0 auto;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 10px 30px rgba(212,165,116,0.4)'">
+                        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd08a5?w=300&h=300&fit=crop" style="width: 100%; height: 100%; object-fit: cover;" alt="Café">
                     </a>
-                    <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="display: block; width: 180px; height: 180px; border-radius: 20px; overflow: hidden; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 10px 30px rgba(212,165,116,0.4)'">
-                        <img src="https://plus.unsplash.com/premium_photo-1688652147959-3c5d36c548e2?w=400&h=400&fit=crop" style="width: 100%; height: 100%; object-fit: cover;" alt="Helado">
+                    <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="display: block; width: 150px; height: 150px; border-radius: 15px; overflow: hidden; transition: all 0.3s; flex: 0 0 auto;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 10px 30px rgba(212,165,116,0.4)'">
+                        <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=300&h=300&fit=crop" style="width: 100%; height: 100%; object-fit: cover;" alt="Helado">
                     </a>
-                    <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="display: block; width: 180px; height: 180px; border-radius: 20px; overflow: hidden; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 10px 30px rgba(212,165,116,0.4)'">
-                        <img src="https://plus.unsplash.com/premium_photo-1578985545062-69928b1d1260?w=400&h=400&fit=crop" style="width: 100%; height: 100%; object-fit: cover;" alt="Pastel">
+                    <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="display: block; width: 150px; height: 150px; border-radius: 15px; overflow: hidden; transition: all 0.3s; flex: 0 0 auto;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 10px 30px rgba(212,165,116,0.4)'">
+                        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=300&h=300&fit=crop" style="width: 100%; height: 100%; object-fit: cover;" alt="Pastel">
                     </a>
-                    <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="display: block; width: 180px; height: 180px; border-radius: 20px; overflow: hidden; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 10px 30px rgba(212,165,116,0.4)'">
-                        <img src="https://plus.unsplash.com/premium_photo-1687899297059-f26d6c1a8d28?w=400&h=400&fit=crop" style="width: 100%; height: 100%; object-fit: cover;" alt="Latte">
+                    <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="display: block; width: 150px; height: 150px; border-radius: 15px; overflow: hidden; transition: all 0.3s; flex: 0 0 auto;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 10px 30px rgba(212,165,116,0.4)'">
+                        <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=300&h=300&fit=crop" style="width: 100%; height: 100%; object-fit: cover;" alt="Latte">
                     </a>
                 </div>
             </div>
