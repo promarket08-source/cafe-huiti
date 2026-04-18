@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario - Café Huiti</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/inventario.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">☕</div>
+                <span>Café Huiti</span>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-view="dashboard">
+                    <span class="nav-icon">📊</span>
+                    Dashboard
+                </a>
+                <a href="#" class="nav-item" data-view="inventario">
+                    <span class="nav-icon">📦</span>
+                    Inventario
+                </a>
+                <a href="#" class="nav-item" data-view="categorias">
+                    <span class="nav-icon">🏷️</span>
+                    Categorías
+                </a>
+                <a href="#" class="nav-item" data-view="alertas">
+                    <span class="nav-icon">⚠️</span>
+                    Alertas
+                    <span class="badge" id="alertsBadge">0</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="../index.html" class="btn-volver">
+                    ← Volver al sitio
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <h1 id="pageTitle">Dashboard</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" onclick="openModal('producto')">
+                        <span>+</span> Agregar Producto
+                    </button>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <section id="view-dashboard" class="view active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #6F4E37, #8B5A2B);">📦</div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="totalProductos">0</span>
+                                <span class="stat-label">Total Productos</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #D4A574, #C49A6C);">☕</div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="totalStock">0</span>
+                                <span class="stat-label">Stock Total</span>
+                            </div>
+                        </div>
+                        <div class="stat-card warning">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #FF9800, #FFB74D);">⚠️</div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stockBajo">0</span>
+                                <span class="stat-label">Stock Bajo</span>
+                            </div>
+                        </div>
+                        <div class="stat-card danger">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #F44336, #EF5350);">🔴</div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="sinStock">0</span>
+                                <span class="stat-label">Sin Stock</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>📦 Productos Recientes</h3>
+                            </div>
+                            <div class="card-body" id="recentProducts">
+                                <p class="empty-state">No hay productos registrados</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>⚠️ Alertas de Stock</h3>
+                            </div>
+                            <div class="card-body" id="alertsList">
+                                <p class="empty-state">Sin alertas</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="view-inventario" class="view">
+                    <div class="filters">
+                        <div class="search-box">
+                            <span class="search-icon">🔍</span>
+                            <input type="text" id="searchInput" placeholder="Buscar producto..." oninput="filterProducts()">
+                        </div>
+                        <select id="filterCategoria" onchange="filterProducts()">
+                            <option value="">Todas las categorías</option>
+                        </select>
+                        <select id="filterStock" onchange="filterProducts()">
+                            <option value="">Todos los estados</option>
+                            <option value="bajo">Stock Bajo</option>
+                            <option value="sin">Sin Stock</option>
+                            <option value="normal">Normal</option>
+                        </select>
+                    </div>
+
+                    <div class="products-table-container">
+                        <table class="products-table">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Categoría</th>
+                                    <th>Stock</th>
+                                    <th>Mínimo</th>
+                                    <th>Precio</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTable">
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section id="view-categorias" class="view">
+                    <div class="categories-grid" id="categoriesGrid">
+                    </div>
+                    <button class="btn btn-secondary" onclick="openModal('categoria')" style="margin-top: 20px;">
+                        <span>+</span> Nueva Categoría
+                    </button>
+                </section>
+
+                <section id="view-alertas" class="view">
+                    <div class="alerts-list" id="fullAlertsList">
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal" id="modalProducto">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalProductoTitle">Agregar Producto</h2>
+                <button class="modal-close" onclick="closeModal('producto')">&times;</button>
+            </div>
+            <form id="productoForm" onsubmit="saveProduct(event)">
+                <input type="hidden" id="productoId">
+                <div class="form-group">
+                    <label for="productoNombre">Nombre del Producto</label>
+                    <input type="text" id="productoNombre" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productoCategoria">Categoría</label>
+                        <select id="productoCategoria" required>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="productoUnidad">Unidad</label>
+                        <select id="productoUnidad" required>
+                            <option value="kg">Kilogramos</option>
+                            <option value="gramos">Gramos</option>
+                            <option value="unidades">Unidades</option>
+                            <option value="litros">Litros</option>
+                            <option value="cajas">Cajas</option>
+                            <option value="bolsas">Bolsas</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productoStock">Stock Actual</label>
+                        <input type="number" id="productoStock" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productoMinimo">Stock Mínimo</label>
+                        <input type="number" id="productoMinimo" min="0" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productoPrecio">Precio (CLP)</label>
+                        <input type="number" id="productoPrecio" min="0" placeholder="1500">
+                    </div>
+                    <div class="form-group">
+                        <label for="productoMarca">Marca</label>
+                        <input type="text" id="productoMarca" placeholder="Ej: Lavazza">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('producto')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="modalCategoria">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h2>Nueva Categoría</h2>
+                <button class="modal-close" onclick="closeModal('categoria')">&times;</button>
+            </div>
+            <form id="categoriaForm" onsubmit="saveCategoria(event)">
+                <input type="hidden" id="categoriaId">
+                <div class="form-group">
+                    <label for="categoriaNombre">Nombre de Categoría</label>
+                    <input type="text" id="categoriaNombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="categoriaIcono">Icono</label>
+                    <select id="categoriaIcono">
+                        <option value="☕">☕ Café en Grano</option>
+                        <option value="🫘">🫘 Café Molido</option>
+                        <option value="💊">💊 Cápsulas</option>
+                        <option value="🍫">🍫 Insumos</option>
+                        <option value="🥛">🥛 Lácteos</option>
+                        <option value="🧁">🧁 Repostería</option>
+                        <option value="🥤">🥤 Bebidas</option>
+                        <option value="📦">📦 Empaque</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('categoria')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="modalConfirmar">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h2>Confirmar Eliminación</h2>
+                <button class="modal-close" onclick="closeModal('confirmar')">&times;</button>
+            </div>
+            <p id="confirmarTexto">¿Estás seguro de eliminar este producto?</p>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('confirmar')">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="btnConfirmarEliminar">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/inventario.js"></script>
+</body>
+</html>

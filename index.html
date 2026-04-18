@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafetería Huití | Café & Helados en Villarrica</title>
+    <meta name="description" content="Café de especialidad tostado artesanalmente en Chile. Granos premium, bebidas artesanales y repostería casera. Calidad que se nota en cada sorbo.">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #5D4037;
+            --primary-light: #8B6F47;
+            --secondary: #3E2723;
+            --accent: #D4A574;
+            --accent-light: #E8C9A8;
+            --cream: #FFF8F0;
+            --dark-bg: #0A0806;
+            --dark-surface: #1A1512;
+            --dark-card: #241E19;
+            --light: #FFFFFF;
+            --muted: #A89888;
+            --whatsapp: #25D366;
+            --gold: #FFD700;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--dark-bg);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: var(--dark-bg);
+        }
+
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 24px; }
+
+        /* LOGO SVG */
+        .logo-svg {
+            width: 55px;
+            height: 55px;
+        }
+
+        /* ANIMACIONES */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+        
+        @keyframes steam {
+            0% { transform: translateY(0) scale(1); opacity: 0.8; }
+            50% { transform: translateY(-15px) scale(1.1); opacity: 0.4; }
+            100% { transform: translateY(-30px) scale(1.2); opacity: 0; }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* HEADER */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: all 0.4s ease;
+        }
+
+        header.scrolled {
+            background: rgba(10, 8, 6, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 12px 0;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.5);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--light);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo span { color: var(--accent); }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--accent); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(93, 64, 55, 0.5);
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(10, 8, 6, 0.95) 0%, rgba(10, 8, 6, 0.7) 50%, rgba(10, 8, 6, 0.9) 100%);
+        }
+
+        .hero-steam {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 200px;
+            pointer-events: none;
+        }
+
+        .steam-line {
+            position: absolute;
+            width: 8px;
+            height: 80px;
+            background: linear-gradient(to top, rgba(212,165,116,0.3), transparent);
+            border-radius: 50%;
+            animation: steam 3s ease-out infinite;
+        }
+
+        .steam-line:nth-child(1) { left: 20%; animation-delay: 0s; }
+        .steam-line:nth-child(2) { left: 50%; animation-delay: 0.5s; }
+        .steam-line:nth-child(3) { left: 80%; animation-delay: 1s; }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            padding: 120px 0;
+        }
+
+        .hero-text {
+            animation: fadeInUp 1.2s ease;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: rgba(212, 165, 116, 0.15);
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            border-radius: 50px;
+            font-size: 0.875rem;
+            color: var(--accent);
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-badge i {
+            animation: pulse 2s infinite;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 25px;
+        }
+
+        .hero-title .highlight {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shimmer 3s linear infinite;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            color: var(--muted);
+            margin-bottom: 40px;
+            max-width: 500px;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 36px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            box-shadow: 0 10px 40px rgba(93, 64, 55, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(93, 64, 55, 0.6);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+        }
+
+        .btn-outline:hover {
+            background: var(--accent);
+            color: var(--dark-bg);
+            transform: translateY(-5px);
+        }
+
+        .btn-whatsapp {
+            background: linear-gradient(135deg, var(--whatsapp), #128C7E);
+            color: white;
+            box-shadow: 0 10px 40px rgba(37, 211, 102, 0.4);
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(37, 211, 102, 0.6);
+        }
+
+        .hero-visual {
+            position: relative;
+            animation: fadeInUp 1.2s ease;
+            animation-delay: 0.3s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .hero-image-container {
+            position: relative;
+            width: 100%;
+            height: 550px;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+        }
+
+        .hero-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s;
+        }
+
+        .hero-image-container:hover img {
+            transform: scale(1.1);
+        }
+
+        .hero-float-card {
+            position: absolute;
+            background: rgba(26, 21, 18, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 20px 25px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .hero-float-card.card-1 {
+            bottom: 30px;
+            left: -30px;
+        }
+
+        .hero-float-card.card-2 {
+            top: 30px;
+            right: -30px;
+            animation-delay: 1s;
+        }
+
+        .float-card-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .float-card-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .float-card-text h4 {
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .float-card-text p {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        /* STATS */
+        .stats-bar {
+            padding: 80px 0;
+            background: linear-gradient(180deg, var(--dark-surface), var(--dark-bg));
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 30px;
+            border-radius: 20px;
+            background: var(--dark-card);
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.4s;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 50px rgba(212, 165, 116, 0.1);
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        /* INSTAGRAM SECTION */
+        .instagram-section {
+            padding: 120px 0;
+            background: var(--dark-surface);
+        }
+
+        .instagram-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .instagram-handle {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            padding: 15px 35px;
+            border-radius: 60px;
+            text-decoration: none;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            transition: all 0.4s;
+            box-shadow: 0 10px 40px rgba(220, 39, 67, 0.4);
+        }
+
+        .instagram-handle:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 60px rgba(220, 39, 67, 0.6);
+        }
+
+        .instagram-handle i {
+            font-size: 1.5rem;
+        }
+
+        .instagram-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .instagram-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .instagram-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s;
+        }
+
+        .instagram-item:hover img {
+            transform: scale(1.15);
+        }
+
+        .instagram-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(93, 64, 55, 0.9) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+        }
+
+        .instagram-item:hover .instagram-overlay {
+            opacity: 1;
+        }
+
+        .instagram-stats {
+            display: flex;
+            gap: 20px;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* CHATBOT */
+        .chatbot-container {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 400px;
+            max-width: calc(100vw - 40px);
+            z-index: 1000;
+            display: none;
+        }
+
+        .chatbot-container.active {
+            display: block;
+        }
+
+        .chatbot-header {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            padding: 20px;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .chatbot-avatar {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .chatbot-info h4 {
+            font-weight: 700;
+            color: white;
+        }
+
+        .chatbot-info p {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .chatbot-status {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.8rem;
+            color: #90EE90;
+        }
+
+        .chatbot-status::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #90EE90;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .chatbot-messages {
+            background: var(--dark-card);
+            height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .chat-message {
+            margin-bottom: 15px;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .chat-message.bot {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-message.bot .avatar {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .chat-message.bot .bubble {
+            background: var(--dark-surface);
+            padding: 12px 18px;
+            border-radius: 0 20px 20px 20px;
+            max-width: 80%;
+            font-size: 0.95rem;
+        }
+
+        .chat-message.user {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .chat-message.user .bubble {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            padding: 12px 18px;
+            border-radius: 20px 0 20px 20px;
+            max-width: 80%;
+            font-size: 0.95rem;
+        }
+
+        .chat-typing {
+            display: flex;
+            gap: 5px;
+            padding: 12px 18px;
+            background: var(--dark-surface);
+            border-radius: 0 20px 20px 20px;
+            width: fit-content;
+        }
+
+        .chat-typing span {
+            width: 8px;
+            height: 8px;
+            background: var(--muted);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+        .chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        .chatbot-input {
+            display: flex;
+            gap: 10px;
+            padding: 20px;
+            background: var(--dark-card);
+            border-radius: 0 0 20px 20px;
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            background: var(--dark-surface);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 15px 20px;
+            border-radius: 30px;
+            color: white;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .chatbot-input input:focus {
+            border-color: var(--accent);
+        }
+
+        .chatbot-input button {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .chatbot-input button:hover {
+            transform: scale(1.1);
+        }
+
+        /* CHATBOT TOGGLE */
+        .chatbot-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+        }
+
+        .chatbot-toggle button {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 10px 40px rgba(93, 64, 55, 0.5);
+            transition: all 0.4s;
+            position: relative;
+        }
+
+        .chatbot-toggle button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: var(--primary);
+            animation: pulse 2s infinite;
+            z-index: -1;
+        }
+
+        .chatbot-toggle button:hover {
+            transform: scale(1.1);
+        }
+
+        .chatbot-toggle button .close-icon {
+            display: none;
+        }
+
+        .chatbot-toggle.active button .chat-icon {
+            display: none;
+        }
+
+        .chatbot-toggle.active button .close-icon {
+            display: block;
+        }
+
+        /* QUICK REPLIES */
+        .quick-replies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .quick-reply {
+            background: var(--dark-surface);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quick-reply:hover {
+            background: var(--accent);
+            color: var(--dark-bg);
+        }
+
+        /* WHATSAPP FLOAT */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 998;
+        }
+
+        .whatsapp-float a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--whatsapp), #128C7E);
+            border-radius: 50%;
+            color: white;
+            font-size: 28px;
+            text-decoration: none;
+            box-shadow: 0 10px 40px rgba(37, 211, 102, 0.5);
+            transition: all 0.4s;
+        }
+
+        .whatsapp-float a:hover {
+            transform: scale(1.15);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .hero-content { grid-template-columns: 1fr; text-align: center; }
+            .hero-text { order: 2; }
+            .hero-visual { order: 1; margin-bottom: 40px; }
+            .hero-description { margin: 0 auto 40px; }
+            .hero-buttons { justify-content: center; }
+        }
+
+        @media (max-width: 900px) {
+            .hero-title { font-size: 3rem; }
+            .instagram-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 700px) {
+            .hero-title { font-size: 2.5rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .nav-links { display: none; }
+            .chatbot-container {
+                right: 10px;
+                left: 10px;
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="header">
+    <div class="container">
+        <nav>
+            <a href="#" class="logo">
+                <!-- LOGO SVG HUITI -->
+                <svg class="logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="48" fill="url(#logoGrad)" stroke="#D4A574" stroke-width="2"/>
+                    <path d="M30 65 C30 50, 40 35, 55 35 C70 35, 75 45, 75 55 C75 70, 60 75, 45 75 L30 75 Z" fill="#3E2723"/>
+                    <ellipse cx="52" cy="55" rx="18" ry="12" fill="#5D4037"/>
+                    <path d="M52 43 Q58 50, 52 57 Q46 50, 52 43" fill="#D4A574" opacity="0.8"/>
+                    <path d="M58 48 Q62 52, 58 56" stroke="#8B6F47" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="40" cy="38" r="3" fill="#D4A574" opacity="0.6"/>
+                    <circle cx="48" cy="35" r="2" fill="#D4A574" opacity="0.4"/>
+                    <defs>
+                        <linearGradient id="logoGrad" x1="0" y1="0" x2="100" y2="100">
+                            <stop offset="0%" stop-color="#5D4037"/>
+                            <stop offset="100%" stop-color="#8B6F47"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Café Huiti</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#nosotros">Nosotros</a></li>
+                <li><a href="#menu">Menú</a></li>
+                <li><a href="#galeria">Galería</a></li>
+                <li><a href="inventario/index.html" target="_blank">Carta</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <a href="https://wa.me/56995775605?text=Hola!%20Quiero%20hacer%20un%20pedido%20de%20Café%20Huiti" class="nav-cta" target="_blank">
+                <i class="fab fa-whatsapp"></i> Ordenar
+            </a>
+        </nav>
+    </div>
+</header>
+
+<!-- FONDO FIJO (PARALLAX) -->
+<img src="https://blogger.googleusercontent.com/img/a/AVvXsEgjPS8fcW7SX2Qeu18VnRA-quM789tTi-V5-In9nwJS-HH08KxmumBGrZ2q-pyh9k4eZ9UQIsyG3FC0HUN-DsoKJfOdlPxF6ooSDjlURUIyOXw4ui-mx8ZDsl9uYQ6Ww4m01XY-FZ_uuC_S81IXwSmywYMdKlSaLjmtgk2nkRGnaiZMwRP1-XhSI0WJ4AYL" style="position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; animation: zoomSlow 20s ease-in-out infinite alternate;" alt="Huití">
+
+<!-- HERO SECTION -->
+<section style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 80px 20px; position: relative; overflow: hidden;">
+    
+    <!-- Overlay oscuro -->
+    <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.9));"></div>
+    
+    <!-- Partículas flotantes -->
+    <div style="position: absolute; inset: 0; pointer-events: none;">
+        <div style="position: absolute; width: 10px; height: 10px; background: #D4A574; border-radius: 50%; top: 20%; left: 10%; opacity: 0.6; animation: float 4s ease-in-out infinite;"></div>
+        <div style="position: absolute; width: 6px; height: 6px; background: #D4A574; border-radius: 50%; top: 40%; left: 80%; opacity: 0.4; animation: float 5s ease-in-out infinite 1s;"></div>
+        <div style="position: absolute; width: 8px; height: 8px; background: #8B6F47; border-radius: 50%; top: 70%; left: 20%; opacity: 0.5; animation: float 6s ease-in-out infinite 2s;"></div>
+        <div style="position: absolute; width: 12px; height: 12px; background: #D4A574; border-radius: 50%; top: 60%; left: 70%; opacity: 0.3; animation: float 7s ease-in-out infinite 0.5s;"></div>
+    </div>
+
+    <!-- Contenido con animación -->
+    <div style="text-align: center; position: relative; z-index: 2; animation: fadeInUp 1s ease;">
+        
+        <h1 style="font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 800; margin-bottom: 20px;">
+            <span style="color: #D4A574;">Cafetería</span> <span style="color: #fff;">Huití</span>
+        </h1>
+        
+        <p style="font-size: 1.2rem; color: #ccc; margin-bottom: 15px; letter-spacing: 3px; text-transform: uppercase; animation: pulse 2s ease-in-out infinite;">
+            Café de Especialidad
+        </p>
+        
+        <p style="font-size: 1rem; color: #A89888; margin-bottom: 40px;">
+            General Korner 727, Villarrica
+        </p>
+        
+        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <a href="https://wa.me/56995775605" style="background: linear-gradient(135deg, #25D366, #128C7E); color: white; padding: 14px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; animation: pulse 2s ease-in-out infinite;">
+                <i class="fab fa-whatsapp"></i> Pedir Ahora
+            </a>
+        </div>
+    </div>
+</section>
+
+<style>
+@keyframes zoomSlow {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
+}
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+}
+</style>
+
+</style>
+
+<!-- VER CARTA -->
+<section style="padding: 100px 20px; text-align: center; background: transparent;">
+    <div style="background: rgba(26, 21, 18, 0.6); backdrop-filter: blur(10px); padding: 50px 60px; border-radius: 30px; border: 2px solid rgba(212, 165, 116, 0.3); display: inline-block;">
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #fff; margin-bottom: 15px;">
+            Nuestra Carta
+        </h2>
+        <p style="color: #ccc; font-size: 1.1rem; margin-bottom: 30px; max-width: 400px;">
+            Descubre todas nuestras especialidades: cafés de especialidad, helados artesanales, desserts y más.
+        </p>
+        <a href="https://menu.fu.do/cordilleraspa/qr-menu" target="_blank" style="display: inline-block; background: linear-gradient(135deg, #D4A574, #8B6F47); color: #0A0806; padding: 18px 50px; border-radius: 50px; text-decoration: none; font-size: 1.2rem; font-weight: 700; box-shadow: 0 10px 40px rgba(212,165,116,0.4); transition: all 0.3s;">
+            <i class="fas fa-utensils"></i> VER MENÚ COMPLETO
+        </a>
+    </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto" style="padding: 100px 0;">
+    <div class="container">
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; text-align: center; margin-bottom: 50px; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">
+            Encuéntranos en <span style="color: var(--accent);">Villarrica</span>
+        </h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 1000px; margin: 0 auto;">
+            <div style="background: rgba(26, 21, 18, 0.6); backdrop-filter: blur(10px); padding: 30px; border-radius: 20px; border: 1px solid rgba(212, 165, 116, 0.15);">
+                <h3 style="margin-bottom: 20px; font-size: 1.3rem; color: #fff; font-weight: 600;">Nuestra Dirección</h3>
+                <p style="color: #fff; margin-bottom: 15px; font-size: 1.1rem;">
+                    <strong>General Korner 727</strong><br>
+                    <span style="color: var(--accent);">Villarrica, Araucanía, Chile</span>
+                </p>
+                <p style="color: #fff; margin-bottom: 20px; font-size: 1.1rem;">
+                    <strong>Horarios:</strong><br>
+                    <span style="color: var(--accent);">Lunes a Domingo: 8:00 - 21:00</span>
+                </p>
+                <a href="https://wa.me/56995775605?text=Hola!%20Quiero%20hacer%20un%20pedido" style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--whatsapp),#128C7E);color:white;padding:15px 30px;border-radius:30px;text-decoration:none;font-weight:600;margin-bottom:15px;">
+                    <i class="fab fa-whatsapp"></i> Pedir por WhatsApp
+                </a>
+                <a href="tel:+56995775605" style="display:inline-flex;align-items:center;gap:10px;background:var(--dark-surface);color:var(--accent);padding:15px 30px;border-radius:30px;text-decoration:none;font-weight:600;margin-bottom:15px;margin-left:10px;border:1px solid var(--accent);">
+                    <i class="fas fa-phone"></i> Llamar al Local
+                </a>
+                <p style="color: var(--muted); font-size: 0.9rem;">
+                    <strong>WhatsApp:</strong> <a href="https://wa.me/56995775605" style="color: var(--accent);">+56 9 9577 5605</a>
+                </p>
+            </div>
+            <div style="background: rgba(26, 21, 18, 0.6); backdrop-filter: blur(10px); padding: 10px; border-radius: 20px; border: 1px solid rgba(212, 165, 116, 0.15); overflow: hidden;">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3088.139499396839!2d-72.2274259!3d-39.2850868!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x961462257628d259%3A0x3e5580b6024b82a1!2sGral.%20Korner%20727%2C%204930539%20Villarrica%2C%20Araucan%C3%ADa!5e0!3m2!1ses-419!2scl!4v1776521264836!5m2!1ses-419!2scl" width="100%" height="300" style="border:0; border-radius: 15px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background: transparent;">
+    <div class="container">
+        <div style="text-align: center; padding: 60px 0 30px;">
+            <a href="#" class="logo" style="justify-content: center; margin-bottom: 20px;">
+                <svg class="logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="48" fill="url(#logoGrad2)" stroke="#D4A574" stroke-width="2"/>
+                    <path d="M30 65 C30 50, 40 35, 55 35 C70 35, 75 45, 75 55 C75 70, 60 75, 45 75 L30 75 Z" fill="#3E2723"/>
+                    <ellipse cx="52" cy="55" rx="18" ry="12" fill="#5D4037"/>
+                    <path d="M52 43 Q58 50, 52 57 Q46 50, 52 43" fill="#D4A574" opacity="0.8"/>
+                    <defs>
+                        <linearGradient id="logoGrad2" x1="0" y1="0" x2="100" y2="100">
+                            <stop offset="0%" stop-color="#5D4037"/>
+                            <stop offset="100%" stop-color="#8B6F47"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span style="font-family: 'Playfair Display', serif; font-size: 2rem;">Cafetería <span>Huití</span></span>
+            </a>
+            <p style="color: var(--muted); margin-bottom: 20px;">Café, Helados y Delicatesen en Villarrica</p>
+            
+            <!-- INSTAGRAM FEED -->
+            <div style="margin-bottom: 40px;">
+                <h4 style="color: #fff; margin-bottom: 20px; font-size: 1.1rem; font-weight: 500;">Síguenos en Instagram</h4>
+                <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                    <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="display: block; width: 180px; height: 180px; border-radius: 20px; overflow: hidden; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 10px 30px rgba(212,165,116,0.4)'">
+                        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd08a5?w=400&h=400&fit=crop" style="width: 100%; height: 100%; object-fit: cover;" alt="Café">
+                    </a>
+                    <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="display: block; width: 180px; height: 180px; border-radius: 20px; overflow: hidden; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 10px 30px rgba(212,165,116,0.4)'">
+                        <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=400&h=400&fit=crop" style="width: 100%; height: 100%; object-fit: cover;" alt="Helado">
+                    </a>
+                    <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="display: block; width: 180px; height: 180px; border-radius: 20px; overflow: hidden; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 10px 30px rgba(212,165,116,0.4)'">
+                        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&h=400&fit=crop" style="width: 100%; height: 100%; object-fit: cover;" alt="Pastel">
+                    </a>
+                    <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="display: block; width: 180px; height: 180px; border-radius: 20px; overflow: hidden; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 10px 30px rgba(212,165,116,0.4)'">
+                        <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=400&h=400&fit=crop" style="width: 100%; height: 100%; object-fit: cover;" alt="Latte">
+                    </a>
+                </div>
+            </div>
+            
+            <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 30px;">
+                <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="width: 45px; height: 45px; background: var(--dark-card); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--muted); transition: all 0.3s;" onmouseover="this.style.background='#E1306C'; this.style.color='white'" onmouseout="this.style.background='var(--dark-card)'; this.style.color='var(--muted)'">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://wa.me/56995775605" target="_blank" style="width: 45px; height: 45px; background: var(--dark-card); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--muted); transition: all 0.3s;" onmouseover="this.style.background='#25D366'; this.style.color='white'" onmouseout="this.style.background='var(--dark-card)'; this.style.color='var(--muted)'">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://www.tiktok.com/@tuwebpro360" target="_blank" style="width: 45px; height: 45px; background: var(--dark-card); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--muted); transition: all 0.3s;" onmouseover="this.style.background='var(--accent)'; this.style.color='var(--dark-bg)'" onmouseout="this.style.background='var(--dark-card)'; this.style.color='var(--muted)'">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+            </div>
+            <p style="color: var(--muted); font-size: 0.9rem;">
+                © 2026 Cafetería Huití | Proyecto impulsado por <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="color: var(--accent);">@tuwebpro360</a>
+            </p>
+        </div>
+    </div>
+</footer>
+
+<!-- CHATBOT -->
+<div class="chatbot-container" id="chatbot">
+    <div class="chatbot-header">
+        <div class="chatbot-avatar">☕</div>
+        <div class="chatbot-info">
+            <h4>Asistente Huiti</h4>
+            <p>Te ayudo con tu pedido</p>
+        </div>
+        <div class="chatbot-status">En línea</div>
+    </div>
+    <div class="chatbot-messages" id="chatMessages">
+        <div class="chat-message bot">
+            <div class="avatar">☕</div>
+            <div class="bubble">
+                ¡Hola! 👋 Soy Huiti, tu asistente. ¿En qué puedo ayudarte?
+                <div class="quick-replies">
+                    <span class="quick-reply" onclick="sendQuickReply('Ver el menú')">📋 Ver menú</span>
+                    <span class="quick-reply" onclick="sendQuickReply('Hacer un pedido')">🛒 Hacer pedido</span>
+                    <span class="quick-reply" onclick="sendQuickReply('Horarios')">🕐 Horarios</span>
+                    <span class="quick-reply" onclick="sendQuickReply('Ubicación')">📍 Ubicación</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="chatbot-input">
+        <input type="text" id="chatInput" placeholder="Escribe tu mensaje..." onkeypress="if(event.key==='Enter')sendMessage()">
+        <button onclick="sendMessage()">
+            <i class="fas fa-paper-plane"></i>
+        </button>
+    </div>
+</div>
+
+<!-- CHATBOT TOGGLE -->
+<div class="chatbot-toggle" id="chatbotToggle">
+    <button onclick="toggleChatbot()">
+        <i class="fas fa-comment-dots chat-icon"></i>
+        <i class="fas fa-times close-icon"></i>
+    </button>
+</div>
+
+<!-- WHATSAPP FLOAT -->
+<div class="whatsapp-float">
+    <a href="https://wa.me/56995775605?text=Hola!%20Quiero%20más%20info%20de%20Café%20Huiti" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+</div>
+
+<script type="module">
+    // CHATBOT INTELIGENTE - Café Huiti
+    // Sistema de ventas y atención al cliente
+    
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    let conversationState = 'welcome';
+    let customerData = { nombre: '', telefono: '', pedido: [], total: 0 };
+
+    // Firebase config - REEMPLAZA CON TUS DATOS
+    const firebaseConfig = {
+        apiKey: "TU_API_KEY",
+        authDomain: "tu-proyecto.firebaseapp.com",
+        projectId: "tu-proyecto-id",
+        storageBucket: "tu-proyecto.appspot.com",
+        messagingSenderId: "tu-id",
+        appId: "tu-app-id"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // FUNCIÓN MAESTRA: Guardar pedido en Firestore + abrir WhatsApp
+    async function finalizarPedido(nombreCliente, detallePedido, total) {
+        try {
+            // 1. Guardar en Firestore para el Panel de Control
+            await addDoc(collection(db, "pedidos"), {
+                cliente: nombreCliente,
+                pedido: detallePedido,
+                monto: total,
+                fecha: serverTimestamp(),
+                estado: "nuevo"
+            });
+            
+            // 2. Crear link de WhatsApp
+            const mensajeWA = `Hola Café Huiti! Soy ${nombreCliente}, me gustaría pedir: ${detallePedido}. Total: $${total}`;
+            const urlWA = `https://wa.me/56995775605?text=${encodeURIComponent(mensajeWA)}`;
+            window.open(urlWA, '_blank');
+            
+            return true;
+        } catch (e) {
+            console.error("Error al guardar pedido: ", e);
+            // Fallback: solo WhatsApp
+            const mensajeWA = `Hola Café Huiti! Quiero hacer un pedido`;
+            const urlWA = `https://wa.me/56995775605?text=${encodeURIComponent(mensajeWA)}`;
+            window.open(urlWA, '_blank');
+            return false;
+        }
+    }
+
+    // Header scroll
+    window.addEventListener('scroll', () => {
+        const header = document.getElementById('header');
+        header.classList.toggle('scrolled', window.scrollY > 100);
+    });
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    window.addEventListener('scroll', () => {
+        reveals.forEach(el => {
+            const top = el.getBoundingClientRect().top;
+            if (top < window.innerHeight - 150) el.classList.add('active');
+        });
+    });
+
+    // Chatbot toggle
+    function toggleChatbot() {
+        document.getElementById('chatbot').classList.toggle('active');
+        document.getElementById('chatbotToggle').classList.toggle('active');
+    }
+
+    function addMessage(text, type, quickReplies = null) {
+        const messages = document.getElementById('chatMessages');
+        const div = document.createElement('div');
+        div.className = `chat-message ${type}`;
+        
+        let html = type === 'bot' 
+            ? `<div class="avatar">☕</div><div class="bubble">${text}`
+            : `<div class="bubble">${text}`;
+        
+        if (quickReplies) {
+            html += `<div class="quick-replies">${quickReplies}</div>`;
+        }
+        
+        if (type === 'bot') html += '</div>';
+        
+        div.innerHTML = html;
+        messages.appendChild(div);
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    function showTyping() {
+        const messages = document.getElementById('chatMessages');
+        messages.innerHTML += `<div class="chat-message bot"><div class="avatar">☕</div><div class="chat-typing"><span></span><span></span><span></span></div></div>`;
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    function hideTyping() {
+        const t = document.querySelector('.chat-typing');
+        if (t) t.parentElement.remove();
+    }
+
+    function sendQuickReply(text) {
+        document.getElementById('chatInput').value = text;
+        sendMessage();
+    }
+
+    function getQuickReplyButtons(options) {
+        return options.map(opt => 
+            `<span class="quick-reply" onclick="sendQuickReply('${opt}')">${opt}</span>`
+        ).join('');
+    }
+
+    // CONTEXTO MAESTRO DEL VENDEDOR - Huiti
+    const CONTEXT_MASTER = `
+Eres Huiti, el vendedor estrella de Cafetería Huití. Tu objetivo es vender y ayudar.
+CARTA COMPLETA:
+
+☕ CAFETERÍA:
+- Americano $2.490
+- Café Cortado $2.900
+- Capuccino $2.900
+- Mocaccino $3.400
+- Latte $2.900
+- Macciatto $2.700
+- Caramel Macciatto $3.400
+- Café Bombón $3.600
+- Manjar Del Sur $3.600
+- Café Huití $3.600
+- Chocolate Caliente $3.490
+- Chaí Latte $3.400
+- Café Vienés $2.990
+- Affogato $3.990
+- Té $1.990
+- Capuccino Sabores $3.490
+- Espresso 60ml $2.490
+
+🧊 HELADOS:
+- Helado Simple $2.990
+- Helado Doble $3.990
+- Helado Triple $4.990
+- Copa Fruta 3 sabores $8.990
+- Copa Oreo 3 sabores $8.990
+- Copa Super8 3 sabores $8.990
+- Copa Gomitas 3 sabores $8.990
+- Café Helado $4.900
+- Milk Shake $4.900
+- Frapuccino $4.900
+- Batido Frutal $4.900
+- Ice Latte $4.900
+- Ice Americano $3.900
+- Té Helado $3.900
+- Topping $300
+
+🍰 POSTRES:
+- Torta $4.990
+- Waffles c/Helado y Fruta $6.900
+- Pie de Limón $3.990
+- Kuchen $4.290
+- Chessecake $4.800
+- Galletas con chocolate $3.490
+- Torta en vaso $2.990
+- Vaso de fruta $2.990
+- Churro con manjar $1.000
+- Volcán de Chocolate $6.990
+- Bizcocho de Zanahorias $2.000
+- Rollito de Canela $3.490
+- Donuts $1.990
+
+🍳 DESAYUNOS:
+- Desayuno 1 $7.490
+- Desayuno 2 $8.490
+- Desayuno 3 $7.990
+- Desayuno 4 $6.490
+
+🥙 SÁNDWICH:
+- Sándwich Huití $7.990
+- Sándwich Martin Pescador $8.990
+- Sándwich Chucao $8.990
+- Sándwich Queltehue $8.490
+- Barros Jarpa $3.990
+- Barros Luco $6.490
+- Chacarero $6.990
+- Churrasco Italiano $7.490
+- Ave Palta $5.990
+- Ave Queso $5.990
+- Ave Champiñón $5.990
+- Ave Pimentón $5.990
+- Ave Pimentón Crema $6.990
+- Hamburguesa Chucao $8.990
+- Sandwich jamón huevo $2.990
+- Extra palta/queso $1.190
+
+🍕 PIZZA:
+- Pizza Pepperoni $4.990
+- Pizza Salame $4.990
+- Pizza Jamón $4.990
+- Pizza Coppa $6.990
+- Pizza Campestre $6.990
+
+🥗 ENSALADAS:
+- Ensalada Camarón $7.990
+- Ensalada Pollo $6.990
+- Ensalada Champiñón $7.990
+
+🌭 HOT DOG:
+- Completo $3.990
+- Salchicha Italiana $3.990
+- Hot Dog $2.990
+
+🥤 BEBIDAS:
+- Bebida en lata $1.990
+- Agua Mineral $1.500
+- Jugo Natural $3.990
+
+DIRECCIÓN: General Korner 727, Villarrica
+WHATSAPP: +56995775605
+DELIVERY: Villarrica y zonas cercanas
+ENVÍOS: A todo Chile
+PAGOS: Todas las tarjetas (Mercado Pago)
+
+REGLAS:
+1. Si quiere comprar, redirigir a WhatsApp
+2. Si pregunta algo fuera de carta, ofrecer WhatsApp
+3. Siempre ser amable y persuasivo
+`;
+
+    // MENSAJE BIENVENIDA - Huiti
+    function getWelcomeMessage() {
+        return `<strong>☕ ¡Hola! Bienvenido a Huiti</strong><br><br>
+Soy <em>Huiti</em>, tu asistente de ventas 🧑‍🏫<br>
+Estoy aquí para ayudarte a encontrar lo que buscas y hacer tu pedido fácil y rápido:<br><br>
+🍰 <strong>Nuestros productos:</strong> Cafés, helados, postres, sandwiches, pizzas<br>
+🚚 <strong>Delivery:</strong> Disponible en Villarrica<br>
+💳 <strong>Pagos:</strong> Todas las tarjetas<br>
+📍 <strong>Ubicación:</strong> General Korner 727<br><br>
+<em>¿Qué te gustaría ordenar hoy?</em>`;
+    }
+
+    // RESPUESTAS INTELIGENTES DEL BOT
+    function getBotResponse(message) {
+        const m = message.toLowerCase();
+        
+        // === GESTIÓN DE ESTADO: RECOLECTAR NOMBRE ===
+        if (conversationState === 'collect_name') {
+            customerData.nombre = message.trim();
+            conversationState = 'collect_phone';
+            return [`Perfecto, <strong>${customerData.nombre}</strong> 📝<br><br>
+Ahora necesito tu número de WhatsApp para enviarte confirmation y coordinar tu pedido:<br><br>
+<i>Ejemplo: +569 1234 5678</i>`, 
+                getQuickReplyButtons(['+569', 'No tengo WhatsApp'])];
+        }
+        
+        // === GESTIÓN DE ESTADO: RECOLECTAR TELÉFONO ===
+        if (conversationState === 'collect_phone') {
+            const phoneMatch = message.match(/(\+?569[\s]?\d{4}[\s]?\d{4})/);
+            if (phoneMatch) {
+                customerData.telefono = phoneMatch[1];
+                conversationState = 'closing';
+                saveLeadToFirebase(customerData);
+                return [`¡Excelente! 🎉<br><br>
+<strong>Datos guardados:</strong><br>
+• Nombre: ${customerData.nombre}<br>
+• WhatsApp: ${customerData.telefono}<br><br>
+Ahora te redirection a WhatsApp para finalize tu pedido:`, 
+                    getQuickReplyButtons(['Hacer pedido ahora', 'Ver el menú primero'])];
+            } else {
+                return `Por favor ingresa un número válido:<br>
+<em>+569 1234 5678</em>`;
+            }
+        }
+        
+        // === RESPUESTAS POR PALABRA CLAVE ===
+        
+        // SALUDOS
+        if (/hola|buenos|buenas|hi|hello/.test(m)) {
+            return [getWelcomeMessage(), 
+                getQuickReplyButtons(['📋 Ver el menú', '🛒 Hacer pedido', '📍 Ubicación'])];
+        }
+        
+        // MENÚ COMPLETO - Cafetería Huití
+        if (/menú|menu|ver|carta|productos|café|bebida|helado|postre|desayuno|sándwich|pizza|ensalada|hot dog|carta|que tienen|que sirve/.test(m)) {
+            conversationState = 'menu';
+            
+            let menuHTML = `<strong>☕ MENÚ - Cafetería Huití</strong><br><br>`;
+            
+            if (/café|americano|cappuccino|latte|mocaccino|expresso|chocolate|chaí/.test(m)) {
+                menuHTML += `<strong>☕ CAFETERÍA:</strong><br>
+• Americano - $2.490<br>
+• Café Cortado - $2.900<br>
+• Capuccino - $2.900<br>
+• Latte - $2.900<br>
+• Mocaccino - $3.400<br>
+• Café Bombón - $3.600<br>
+• Café Huití - $3.600<br>
+• Espresso 60ml - $2.490<br>
+• Chocolate Caliente - $3.490<br>
+• Chaí Latte - $3.400<br><br>`;
+            }
+            
+            if (/helado|helados/.test(m)) {
+                menuHTML += `<strong>🧊 HELADOS:</strong><br>
+• Helado Simple - $2.990<br>
+• Helado Doble - $3.990<br>
+• Helado Triple - $4.990<br>
+• Copa Fruta 3 sabores - $8.990<br>
+• Copa Oreo - $8.990<br>
+• Copa Super8 - $8.990<br>
+• Milk Shake - $4.900<br>
+• Frapuccino - $4.900<br><br>`;
+            }
+            
+            if (/postre|postres|torta|kuchen|pie|waffle|chessecake|churro|donuts/.test(m)) {
+                menuHTML += `<strong>🍰 POSTRES:</strong><br>
+• Torta - $4.990<br>
+• Waffles c/helado - $6.900<br>
+• Pie de Limón - $3.990<br>
+• Kuchen - $4.290<br>
+• Chessecake - $4.800<br>
+• Volcán de Chocolate - $6.990<br>
+• Churro con manjar - $1.000<br>
+• Rollito de Canela - $3.490<br><br>`;
+            }
+            
+            if (/sándwich|sandwich|barros|chucao|chacarero|ave|hamburguesa/.test(m)) {
+                menuHTML += `<strong>🌮 SÁNDWICH:</strong><br>
+• Barros Jarpa - $3.990<br>
+• Barros Luco - $6.490<br>
+• Chacarero - $6.990<br>
+• Churrasco Italiano - $7.490<br>
+• Ave Palta - $5.990<br>
+• Ave Queso - $5.990<br>
+• Sándwich Huití - $7.990<br>
+• Sándwich Martin Pescador - $8.990<br>
+• Sándwich Chucao - $8.990<br><br>`;
+            }
+            
+            if (/pizza| pizzas/.test(m)) {
+                menuHTML += `<strong>🍕 PIZZA:</strong><br>
+• Pizza Pepperoni - $4.990<br>
+• Pizza Salame - $4.990<br>
+• Pizza Jamón - $4.990<br>
+• Pizza Coppa - $6.990<br>
+• Pizza Campestre - $6.990<br><br>`;
+            }
+            
+            if (/desayuno|desayunos/.test(m)) {
+                menuHTML += `<strong>🍳 DESAYUNOS:</strong><br>
+• Desayuno 1 - $7.490<br>
+• Desayuno 2 - $8.490<br>
+• Desayuno 3 - $7.990<br>
+• Desayuno 4 - $6.490<br><br>`;
+            }
+            
+            if (/bebida|bebidas|agua|jugo|jugo/.test(m)) {
+                menuHTML += `<strong>🥤 BEBIDAS:</strong><br>
+• Bebida en lata - $1.990<br>
+• Agua Mineral - $1.500<br>
+• Jugo Natural - $3.990<br>
+• Té - $1.990<br>
+• Té Helado - $3.900<br>
+• Batido Frutal - $4.900<br><br>`;
+            }
+            
+            if (/ensalada|ensaladas/.test(m)) {
+                menuHTML += `<strong>🥗 ENSALADAS:</strong><br>
+• Ensalada Camarón - $7.990<br>
+• Ensalada Pollo - $6.990<br>
+• Ensalada Champiñón - $7.990<br><br>`;
+            }
+            
+            if (/hot dog|hotdog|completo|italiana/.test(m)) {
+                menuHTML += `<strong>🌭 HOT DOG:</strong><br>
+• Completo - $3.990<br>
+• Salchicha Italiana - $3.990<br>
+• Hot Dog Simple - $2.990<br><br>`;
+            }
+            
+            if (!menuHTML.includes('<br><br>')) {
+                menuHTML = `<strong>☕ MENÚ - Cafetería Huití</strong><br><br>
+<strong>☕ CAFETERÍA:</strong><br>
+• Americano - $2.490<br>
+• Café Cortado - $2.900<br>
+• Capuccino - $2.900<br>
+• Latte - $2.900<br>
+• Mocaccino - $3.400<br>
+• Café Bombón - $3.600<br>
+• Café Huití - $3.600<br><br>
+<strong>🧊 HELADOS:</strong><br>
+• Helado Simple - $2.990<br>
+• Helado Doble - $3.990<br>
+• Copa Fruta - $8.990<br><br>
+<strong>🍰 POSTRES:</strong><br>
+• Torta - $4.990<br>
+• Pie de Limón - $3.990<br>
+• Kuchen - $4.290<br><br>
+<strong>🌮 SÁNDWICH:</strong><br>
+• Barros Jarpa - $3.990<br>
+• Barros Luco - $6.490<br>
+• Chacarero - $6.990<br><br>`;
+            }
+            
+            menuHTML += `¿Qué te gustaría ordenar?`;
+            
+            return [menuHTML, getQuickReplyButtons(['🛒 Hacer pedido', 'Otra categoría', '📍 Ubicación'])];
+        }
+        
+        // PEDIDO - CIERRE DE VENTA
+        if (/pedido|ordenar|comprar|quiero/.test(m)) {
+            conversationState = 'collect_name';
+            return [`¡Excelente elección! 🎯<br><br>
+Para preparar tu pedido personalizado, necesito tus datos:<br><br>
+<strong>¿Cuál es tu nombre?</strong>`,
+                getQuickReplyButtons(['Soy nuevo'])];
+        }
+        
+        // PRECIOS/COSTO
+        if (/precio|costo|cuánto|cuanto|valor/.test(m)) {
+            return [`<strong>💰 NUESTROS PRECIOS</strong><br><br>
+<em>Calidad Premium - Comercio Justo</em><br><br>
+☕ <strong>Expresso</strong> - $1.500<br>
+☕ <strong>Cappuccino</strong> - $2.200<br>
+🧊 <strong>Cold Brew</strong> - $2.500<br>
+🍫 <strong>Mocha Premium</strong> - $2.800<br>
+🥐 <strong>Croissant</strong> - $2.200<br>
+🍰 <strong>Torta</strong> - $3.500<br><br>
+<strong>NOTA:</strong> <em>Inversión en calidad premium</em><br><br>
+¿Quieres ver el menú completo?`,
+                getQuickReplyButtons(['Ver menú', 'Hacer pedido'])];
+        }
+        
+        // HORARIOS
+        if (/horario|hora|abierto|cerrado/.test(m)) {
+            return [`<strong>🕐 HORARIOS</strong><br><br>
+📅 <em>Lunes - Viernes:</em> 7:30 - 20:00<br>
+📅 <em>Sábados:</em> 8:00 - 21:00<br>
+📅 <em>Domingos:</em> 9:00 - 18:00<br><br>
+<em>¡Te esperamos! ☕</em>`,
+                getQuickReplyButtons(['Hacer pedido', 'Ubicación'])];
+        }
+        
+        // UBICACIÓN/DIRECCIÓN
+        if (/ubicación|dirección|dónde|donde|ubicado|llegar/.test(m)) {
+            return [`<strong>📍 NUESTRA DIRECCIÓN</strong><br><br>
+🗺️ <em>General Korner 727, Villarrica</em><br><br>
+<strong>📍 Zona:</strong> Centro de Villarrica, Araucanía<br><br>
+📱 <em>Delivery disponible en Villarrica y zoneas cercanas</em><br><br>
+<a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3088.139499396839!2d-72.2274259!3d-39.2850868!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x961462257628d259%3A0x3e5580b6024b82a1!2sGral.%20Korner%20727%2C%204930539%20Villarrica%2C%20Araucan%C3%ADa!5e0!3m2!1ses-419!2scl!4v1776521264836!5m2!1ses-419!2scl" target="_blank" style="color:var(--accent);">
+<strong>📍 Ver en Google Maps</strong></a><br><br>
+¿Necesitas que te aisle a llegar?`,
+                getQuickReplyButtons(['Cómo llegar', 'Hacer pedido'])];
+        }
+        
+        // DELIVERY
+        if (/delivery|envío|enviar|a domicilio|inicio/.test(m)) {
+            return [`<strong>🚀 DELIVERY</strong><br><br>
+📦 <em>Entregamos a todo Chile</em><br><br>
+🕐 <em>Tiempo:</em> 30-45 min<br>
+📍 <em>Zonas:</em> [definir zonas]<br><br>
+<em>Empaque preservador de frescura</em><br><br>
+<a href="https://wa.me/56995775605?text=Hola!%20Quiero%20solicitar%20delivery" target="_blank">
+<strong>🚗 Solicitar Delivery</strong></a>`,
+                getQuickReplyButtons(['Ver menú', 'Hacer pedido'])];
+        }
+        
+        // OBJECIÓN: ES CARO
+        if (/caro|caro|expensive|barato|baro/.test(m)) {
+            return [`💡 <strong>Entiendo tu observación</strong><br><br>
+<em>No vendemos café, vendemos experiencia:</em><br><br>
+✨ <strong>Granos de especialidad</strong> premium<br>
+🌱 <strong>Comercio justo</strong> - cafetero pagado bien<br>
+🔥 <strong>Tueste artesanal</strong> por experts<br>
+💚 <strong>Sostenibilidad</strong> ambiental<br><br>
+<em>Es una inversión en calidad ☕</em><br><br>
+¿Quieres probar un <strong>pack de degustación</strong>?`,
+                getQuickReplyButtons(['Sí, quiero', 'Ver más caro', 'Mejor ir al local'])];
+        }
+        
+        // GRACIAS
+        if (/gracias|thanks|thank/.test(m)) {
+            return [`¡De nada! 😊<br><br>
+<strong>¿Algo más en lo que te pueda ayudar?</strong><br><br>
+Te recuerdo que puedes escribirnos cuando quieras por WhatsApp 📱`,
+                getQuickReplyButtons(['Hacer pedido', 'Ver menú', 'Ubicación'])];
+        }
+        
+        // ESTADO DE CIERRE
+        if (conversationState === 'closing') {
+            if (/menú|menu|primero|ver más/.test(m)) {
+                conversationState = 'menu';
+                return getBotResponse('ver menú');
+            }
+            // Redireccionar a WhatsApp
+            const waMsg = encodeURIComponent(`Hola! Soy ${customerData.nombre}.Quiero hacer un pedido de Café Huiti`);
+            return [`<strong>🎉 Perfecto!</strong><br><br>
+Serás redirectionado a WhatsApp para finalize tu pedido:<br><br>
+<a href="https://wa.me/56995775605?text=${waMsg}" target="_blank" class="btn btn-whatsapp" style="display:inline-block;padding:12px 24px;text-decoration:none;border-radius:25px;">
+<strong>💬 Completar Pedido</strong></a><br><br>
+<em>¡Gracias por elegir Café Huiti! ☕</em>`,
+                getQuickReplyButtons(['Ver el menú'])];
+        }
+        
+        // RESPUESTA POR DEFECTO
+        return [`Entendido 👍<br><br>
+Te puedo ayudar con:<br><br>
+📋 <strong>Ver el menú</strong> - Nuestras especialidades<br>
+🛒 <strong>Hacer un pedido</strong> - Personalizado<br>
+💰 <strong>Precios</strong> - Inversión en calidad<br>
+📍 <strong>Ubicación</strong> - Y delivery<br>
+🕐 <strong>Horarios</strong> - De atención<br><br>
+¿En qué puedo ayudarte?`,
+            getQuickReplyButtons(['📋 Ver menú', '🛒 Hacer pedido', '📍 Ubicación'])];
+    }
+
+    function sendMessage() {
+        const input = document.getElementById('chatInput');
+        const message = input.value.trim();
+        if (!message) return;
+
+        addMessage(message, 'user');
+        input.value = '';
+        
+        showTyping();
+        setTimeout(() => {
+            hideTyping();
+            const resp = getBotResponse(message);
+            addMessage(resp[0], 'bot', resp[1]);
+        }, 800);
+    }
+
+    // Inicializar chatbot cerrado
+    document.getElementById('chatbot').classList.remove('active');
+</script>
+
+</body>
+</html>

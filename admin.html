@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin | Café Huití</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #5D4037;
+            --primary-light: #8B6F47;
+            --secondary: #3E2723;
+            --accent: #D4A574;
+            --cream: #FFF8F0;
+            --dark-bg: #0A0806;
+            --dark-surface: #1A1512;
+            --dark-card: #241E19;
+            --light: #FFFFFF;
+            --muted: #A89888;
+            --whatsapp: #25D366;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --danger: #F44336;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--dark-bg);
+            color: var(--light);
+            min-height: 100vh;
+        }
+        
+        .admin-header {
+            background: linear-gradient(135deg, var(--dark-surface), var(--dark-card));
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .admin-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .admin-logo img {
+            width: 45px;
+            height: 45px;
+        }
+        
+        .admin-logo h1 {
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+        
+        .admin-logo span {
+            color: var(--light);
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .refresh-btn {
+            background: var(--accent);
+            color: var(--dark-bg);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .refresh-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 30px 40px;
+            background: var(--dark-surface);
+        }
+        
+        .stat-card {
+            background: var(--dark-card);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .stat-card i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .stat-card .number {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .stat-card .label {
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+        
+        .stat-card.ventas { border: 1px solid rgba(76, 175, 80, 0.3); }
+        .stat-card.ventas i { color: #4CAF50; }
+        .stat-card.ventas .number { color: #4CAF50; }
+        
+        .stat-card.hoy { border: 1px solid rgba(33, 150, 243, 0.3); }
+        .stat-card.hoy i { color: #2196F3; }
+        .stat-card.hoy .number { color: #2196F3; }
+        
+        .stat-card.entregados { border: 1px solid rgba(255, 193, 7, 0.3); }
+        .stat-card.entregados i { color: #FFC107; }
+        .stat-card.entregados .number { color: #FFC107; }
+        
+        .stat-card.total { border: 1px solid rgba(212, 165, 116, 0.3); }
+        .stat-card.total i { color: var(--accent); }
+        .stat-card.total .number { color: var(--accent); }
+        
+        .main-content {
+            padding: 30px 40px;
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            color: var(--accent);
+        }
+        
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--dark-card);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .orders-table th {
+            background: var(--secondary);
+            padding: 18px 20px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .orders-table td {
+            padding: 18px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .orders-table tr:hover {
+            background: rgba(212, 165, 116, 0.05);
+        }
+        
+        .orders-table .cliente {
+            font-weight: 600;
+            color: var(--light);
+        }
+        
+        .orders-table .pedido {
+            color: var(--muted);
+            max-width: 300px;
+        }
+        
+        .orders-table .monto {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+        
+        .orders-table .fecha {
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .status-badge.nuevo {
+            background: rgba(255, 193, 7, 0.2);
+            color: var(--warning);
+        }
+        
+        .status-badge.procesando {
+            background: rgba(33, 150, 243, 0.2);
+            color: #2196F3;
+        }
+        
+        .status-badge.entregado {
+            background: rgba(76, 175, 80, 0.2);
+            color: var(--success);
+        }
+        
+        .whatsapp-btn {
+            background: var(--whatsapp);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .whatsapp-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--muted);
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+        
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--accent);
+        }
+        
+        .loading i {
+            font-size: 3rem;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 900px) {
+            .stats-bar { grid-template-columns: repeat(2, 1fr); }
+            .admin-header { flex-direction: column; gap: 20px; }
+            .orders-table { display: block; overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <div class="admin-logo">
+            <svg width="45" height="45" viewBox="0 0 100 100" fill="none">
+                <circle cx="50" cy="50" r="48" fill="url(#logoGrad)" stroke="#D4A574" stroke-width="2"/>
+                <path d="M30 65 C30 50, 40 35, 55 35 C70 35, 75 45, 75 55 C75 70, 60 75, 45 75 L30 75 Z" fill="#3E2723"/>
+                <ellipse cx="52" cy="55" rx="18" ry="12" fill="#5D4037"/>
+                <path d="M52 43 Q58 50, 52 57 Q46 50, 52 43" fill="#D4A574" opacity="0.8"/>
+                <defs>
+                    <linearGradient id="logoGrad" x1="0" y1="0" x2="100" y2="100">
+                        <stop offset="0%" stop-color="#5D4037"/>
+                        <stop offset="100%" stop-color="#8B6F47"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+            <div>
+                <h1>Panel Café Huití</h1>
+                <span>Administración</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <span style="color: var(--muted); font-size: 0.85rem; display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-shield-alt"></i> Panel de uso exclusivo administrativo
+            </span>
+            <button class="refresh-btn" onclick="loadPedidos()">
+                <i class="fas fa-sync-alt"></i> Actualizar
+            </button>
+        </div>
+    </header>
+    
+    <div class="stats-bar">
+        <div class="stat-card total">
+            <i class="fas fa-shopping-bag"></i>
+            <div class="number" id="totalPedidos">0</div>
+            <div class="label">Pedidos Total</div>
+        </div>
+        <div class="stat-card hoy">
+            <i class="fas fa-clock"></i>
+            <div class="number" id="pedidosHoy">0</div>
+            <div class="label">Pedidos Hoy</div>
+        </div>
+        <div class="stat-card ventas">
+            <i class="fas fa-dollar-sign"></i>
+            <div class="number" id="ventasTotal">$0</div>
+            <div class="label">Ventas Total</div>
+        </div>
+        <div class="stat-card entregados">
+            <i class="fas fa-check-circle"></i>
+            <div class="number" id="entregados">0</div>
+            <div class="label">Entregados</div>
+        </div>
+    </div>
+    
+    <main class="main-content">
+        <h2 class="section-title">
+            <i class="fas fa-list"></i> Pedidos Recientes
+        </h2>
+        
+        <div id="loading" class="loading">
+            <i class="fas fa-spinner"></i>
+            <p>Cargando pedidos...</p>
+        </div>
+        
+        <div id="empty" class="empty-state" style="display: none;">
+            <i class="fas fa-inbox"></i>
+            <h3>No hay pedidos aún</h3>
+            <p>Los nuevos pedidos aparecerán aquí</p>
+        </div>
+        
+        <table class="orders-table" id="ordersTable" style="display: none;">
+            <thead>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Pedido</th>
+                    <th>Monto</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody id="ordersBody">
+            </tbody>
+        </table>
+    </main>
+    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, orderBy, query, updateDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        
+        // Firebase config - REEMPLAZA CON TUS DATOS
+        const firebaseConfig = {
+            apiKey: "TU_API_KEY",
+            authDomain: "tu-proyecto.firebaseapp.com",
+            projectId: "tu-proyecto-id",
+            storageBucket: "tu-proyecto.appspot.com",
+            messagingSenderId: "tu-id",
+            appId: "tu-app-id"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        
+        let pedidos = [];
+        
+        async function loadPedidos() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('empty').style.display = 'none';
+            document.getElementById('ordersTable').style.display = 'none';
+            
+            try {
+                const q = query(collection(db, "pedidos"), orderBy("fecha", "desc"));
+                const snapshot = await getDocs(q);
+                
+                pedidos = [];
+                snapshot.forEach(doc => {
+                    pedidos.push({ id: doc.id, ...doc.data() });
+                });
+                
+                renderPedidos();
+            } catch (e) {
+                console.error("Error:", e);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('empty').style.display = 'block';
+                
+                let msg = 'Error de conexión';
+                if (e.code === 'permission-denied' || e.message.includes('permission')) {
+                    msg = 'Sin permisos. Verifica las reglas de Firestore';
+                } else if (e.code === 'not-found' || e.message.includes('project')) {
+                    msg = 'Configura tu Firebase en admin.html';
+                }
+                
+                document.getElementById('empty').innerHTML = `
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>${msg}</h3>
+                    <p>${e.message}</p>
+                `;
+            }
+        }
+        
+        function renderPedidos() {
+            document.getElementById('loading').style.display = 'none';
+            
+            if (pedidos.length === 0) {
+                document.getElementById('empty').style.display = 'block';
+                return;
+            }
+            
+            const tbody = document.getElementById('ordersBody');
+            tbody.innerHTML = '';
+            
+            let totalVentas = 0;
+            let entregados = 0;
+            const hoy = new Date().toDateString();
+            let pedidosHoyCount = 0;
+            
+            pedidos.forEach(p => {
+                const fecha = p.fecha ? new Date(p.fecha.seconds * 1000) : new Date();
+                const fechaStr = fecha.toLocaleDateString('es-CL', { 
+                    day: '2-digit', 
+                    month: 'short', 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                });
+                
+                if (fecha.toDateString() === hoy) pedidosHoyCount++;
+                if (p.estado === 'entregado') entregados++;
+                totalVentas += p.monto || 0;
+                
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="cliente">${p.cliente || 'Sin nombre'}</td>
+                    <td class="pedido">${p.pedido || 'Sin detalle'}</td>
+                    <td class="monto">$${(p.monto || 0).toLocaleString('es-CL')}</td>
+                    <td class="fecha">${fechaStr}</td>
+                    <td><span class="status-badge ${p.estado || 'nuevo'}">${p.estado || 'nuevo'}</span></td>
+                    <td>
+                        <a href="https://wa.me/56995775605?text=Hola ${p.cliente || ''}" target="_blank" class="whatsapp-btn">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+            
+            document.getElementById('totalPedidos').textContent = pedidos.length;
+            document.getElementById('pedidosHoy').textContent = pedidosHoyCount;
+            document.getElementById('ventasTotal').textContent = '$' + totalVentas.toLocaleString('es-CL');
+            document.getElementById('entregados').textContent = entregados;
+            
+            document.getElementById('ordersTable').style.display = 'table';
+        }
+        
+        // Cargar al inicio
+        loadPedidos();
+        
+        // Auto-refresh cada 30 segundos
+        setInterval(loadPedidos, 30000);
+    </script>
+</body>
+</html>
