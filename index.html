@@ -543,7 +543,11 @@
             width: 400px;
             max-width: calc(100vw - 40px);
             z-index: 1000;
-            display: none;
+            display: block;
+            background: #1A1512;
+            border-radius: 20px;
+            border: 2px solid #D4A574;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }
 
         .chatbot-container.active {
@@ -551,9 +555,9 @@
         }
 
         .chatbot-header {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
+            background: linear-gradient(135deg, #5D4037, #D4A574);
             padding: 20px;
-            border-radius: 20px 20px 0 0;
+            border-radius: 18px 18px 0 0;
             display: flex;
             align-items: center;
             gap: 15px;
@@ -1116,36 +1120,39 @@
     </div>
 </footer>
 
-<!-- CHATBOT -->
-<div class="chatbot-container" id="chatbot">
-    <div class="chatbot-header">
-        <div class="chatbot-avatar">☕</div>
-        <div class="chatbot-info">
-            <h4>Asistente Huiti</h4>
-            <p>Te ayudo con tu pedido</p>
+<!-- CHATBOT FIJO -->
+<div style="position: fixed; bottom: 20px; right: 20px; z-index: 999;">
+    <div id="chatPanel" style="width: 350px; background: #1A1512; border-radius: 20px; border: 2px solid #D4A574; display: none;">
+        <div style="background: linear-gradient(135deg, #5D4037, #D4A574); padding: 15px; border-radius: 18px 18px 0 0; display: flex; align-items: center; gap: 10px;">
+            <div style="width: 40px; height: 40px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px;">☕</div>
+            <div>
+                <div style="color: white; font-weight: bold; font-size: 14px;">Asistente Huiti</div>
+                <div style="color: rgba(255,255,255,0.8); font-size: 12px;">Te ayudo con tu pedido</div>
+            </div>
         </div>
-        <div class="chatbot-status">En línea</div>
-    </div>
-    <div class="chatbot-messages" id="chatMessages">
-        <div class="chat-message bot">
-            <div class="avatar">☕</div>
-            <div class="bubble">
-                ¡Hola! 👋 Soy Huiti, tu asistente. ¿En qué puedo ayudarte?
-                <div class="quick-replies">
-                    <span class="quick-reply" onclick="sendQuickReply('Ver el menú')">📋 Ver menú</span>
-                    <span class="quick-reply" onclick="sendQuickReply('Hacer un pedido')">🛒 Hacer pedido</span>
-                    <span class="quick-reply" onclick="sendQuickReply('Horarios')">🕐 Horarios</span>
-                    <span class="quick-reply" onclick="sendQuickReply('Ubicación')">📍 Ubicación</span>
+        <div id="chatMessages" style="height: 250px; padding: 15px; overflow-y: auto;">
+            <div class="chat-message bot" style="display: flex; gap: 10px; margin-bottom: 15px;">
+                <div style="width: 30px; height: 30px; background: linear-gradient(135deg, #5D4037, #D4A574); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">☕</div>
+                <div style="background: #241E19; padding: 12px; border-radius: 0 15px 15px 15px; max-width: 80%; font-size: 14px;">
+                    ¡Hola! ☕Soy Huiti, tu asistente. ¿En qué puedo ayudarte?
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;">
+                        <span onclick="sendQuickReply('Ver menu')" style="background: #241E19; border: 1px solid #D4A574; color: #D4A574; padding: 6px 12px; border-radius: 15px; font-size: 12px; cursor: pointer;">Ver menú</span>
+                        <span onclick="sendQuickReply('Hacer pedido')" style="background: #241E19; border: 1px solid #25D366; color: #25D366; padding: 6px 12px; border-radius: 15px; font-size: 12px; cursor: pointer;">Hacer pedido</span>
+                        <span onclick="sendQuickReply('Ubicacion')" style="background: #241E19; border: 1px solid #D4A574; color: #D4A574; padding: 6px 12px; border-radius: 15px; font-size: 12px; cursor: pointer;">Ubicación</span>
+                    </div>
                 </div>
             </div>
         </div>
+        <div style="display: flex; gap: 10px; padding: 15px; border-top: 1px solid #D4A574;">
+            <input type="text" id="chatInput" placeholder="Escribe..." onkeypress="if(event.key==='Enter')sendMessage()" style="flex: 1; background: #241E19; border: 1px solid #D4A574; padding: 10px; border-radius: 20px; color: white; outline: none;">
+            <button onclick="sendMessage()" style="width: 40px; height: 40px; background: linear-gradient(135deg, #5D4037, #D4A574); border: none; border-radius: 50%; color: white; cursor: pointer;">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
     </div>
-    <div class="chatbot-input">
-        <input type="text" id="chatInput" placeholder="Escribe tu mensaje..." onkeypress="if(event.key==='Enter')sendMessage()">
-        <button onclick="sendMessage()">
-            <i class="fas fa-paper-plane"></i>
-        </button>
-    </div>
+    <button onclick="toggleChatbot()" style="width: 60px; height: 60px; background: linear-gradient(135deg, #5D4037, #D4A574); border: none; border-radius: 50%; color: white; font-size: 24px; cursor: pointer; box-shadow: 0 5px 20px rgba(0,0,0,0.3);">
+        💬
+    </button>
 </div>
 
 <!-- CHATBOT TOGGLE -->
@@ -1193,25 +1200,32 @@
     });
 
     // Chatbot toggle
+    let chatAbierto = false;
     function toggleChatbot() {
-        document.getElementById('chatbot').classList.toggle('active');
-        document.getElementById('chatbotToggle').classList.toggle('active');
+        chatAbierto = !chatAbierto;
+        var panel = document.getElementById('chatPanel');
+        panel.style.display = chatAbierto ? 'block' : 'none';
     }
 
     function addMessage(text, type, quickReplies = null) {
         const messages = document.getElementById('chatMessages');
         const div = document.createElement('div');
-        div.className = `chat-message ${type}`;
         
-        let html = type === 'bot' 
-            ? `<div class="avatar">☕</div><div class="bubble">${text}`
-            : `<div class="bubble">${text}`;
-        
-        if (quickReplies) {
-            html += `<div class="quick-replies">${quickReplies}</div>`;
+        let html = '';
+        if (type === 'bot') {
+            html = `<div style="display:flex;gap:10px;margin-bottom:15px;">
+                <div style="width:30px;height:30px;background:linear-gradient(135deg,#5D4037,#D4A574);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">☕</div>
+                <div style="background:#241E19;padding:12px;border-radius:0 15px 15px 15px;max-width:80%;font-size:14px;">${text}`;
+        } else {
+            html = `<div style="display:flex;justify-content:flex-end;margin-bottom:15px;">
+                <div style="background:linear-gradient(135deg,#5D4037,#8B6F47);padding:12px;border-radius:15px 0 15px 15px;max-width:80%;font-size:14px;">${text}</div>`;
         }
         
-        if (type === 'bot') html += '</div>';
+        if (quickReplies) {
+            html += `<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;">${quickReplies}</div>`;
+        }
+        
+        if (type === 'bot') html += '</div></div>';
         
         div.innerHTML = html;
         messages.appendChild(div);
