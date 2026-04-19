@@ -312,6 +312,35 @@
         </div>
     </header>
     
+    <!-- LOGIN PANTALLA -->
+    <div id="loginScreen" style="position:fixed;inset:0;background:#0A0806;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:20px;">
+        <svg width="80" height="80" viewBox="0 0 100 100" fill="none" style="margin-bottom:30px;">
+            <circle cx="50" cy="50" r="48" fill="url(#logoGrad)" stroke="#D4A574" stroke-width="2"/>
+            <path d="M30 65 C30 50, 40 35, 55 35 C70 35, 75 45, 75 55 C75 70, 60 75, 45 75 L30 75 Z" fill="#3E2723"/>
+            <ellipse cx="52" cy="55" rx="18" ry="12" fill="#5D4037"/>
+            <path d="M52 43 Q58 50, 52 57 Q46 50, 52 43" fill="#D4A574" opacity="0.8"/>
+            <defs><linearGradient id="logoGrad" x1="0" y1="0" x2="100" y2="100"><stop offset="0%" stop-color="#5D4037"/><stop offset="100%" stop-color="#8B6F47"/></linearGradient></defs>
+        </svg>
+        <h2 style="color:#D4A574;font-size:1.8rem;margin-bottom:30px;">Acceso Admin</h2>
+        <input type="password" id="codigoIngreso" placeholder="Ingresa código" style="padding:15px 25px;font-size:16px;border-radius:30px;border:2px solid #D4A574;background:#1A1512;color:white;margin-bottom:20px;text-align:center;width:250px;">
+        <button onclick="verificarCodigo()" style="padding:15px 40px;background:linear-gradient(135deg,#5D4037,#D4A574);color:white;border:none;border-radius:30px;font-size:16px;font-weight:700;cursor:pointer;">Ingresar</button>
+        <p id="errorMsg" style="color:#F44336;margin-top:15px;display:none;">Código incorrecto</p>
+        <script>
+            function verificarCodigo() {
+                var codigo = document.getElementById('codigoIngreso').value;
+                if(codigo === 'huiti2026') {
+                    document.getElementById('loginScreen').style.display = 'none';
+                    localStorage.setItem('adminHuiti','ok');
+                } else {
+                    document.getElementById('errorMsg').style.display = 'block';
+                }
+            }
+            if(localStorage.getItem('adminHuiti') === 'ok') {
+                document.getElementById('loginScreen').style.display = 'none';
+            }
+        </script>
+    </div>
+    
     <div class="stats-bar">
         <div class="stat-card total">
             <i class="fas fa-shopping-bag"></i>

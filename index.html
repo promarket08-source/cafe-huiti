@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
-        :root {
+:root {
             --primary: #5D4037;
             --primary-light: #8B6F47;
             --secondary: #3E2723;
@@ -23,7 +23,24 @@
             --light: #FFFFFF;
             --muted: #A89888;
             --whatsapp: #25D366;
-            --gold: #FFD700;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --danger: #F44336;
+        }
+
+        /* BOTONES FLOTANTES - Separados */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            z-index: 998;
+        }
+        
+        .chatbot-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 999;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -924,6 +941,8 @@
                 gap: 15px !important;
             }
         }
+        
+        /* Instagram grid responsive - vacío */
     </style>
 </head>
 <body>
@@ -932,7 +951,7 @@
 <header id="header">
     <div class="container">
         <nav>
-            <a href="#" class="logo">
+            <a href="index.html" class="logo">
                 <!-- LOGO SVG HUITI -->
                 <svg class="logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="50" cy="50" r="48" fill="url(#logoGrad)" stroke="#D4A574" stroke-width="2"/>
@@ -951,11 +970,10 @@
                 </svg>
                 <span>Café Huiti</span>
             </a>
+            <li><a href="admin.html" target="_blank" style="color: #D4A574;">Acceso Admin</a></li>
             <ul class="nav-links">
                 <li><a href="#nosotros">Nosotros</a></li>
-                <li><a href="#menu">Menú</a></li>
-                <li><a href="#galeria">Galería</a></li>
-                <li><a href="inventario/index.html" target="_blank">Carta</a></li>
+                <li><a href="https://www.fu.do/AT6hhQ7mrYAFW4CjUhiJxpdQtJKvG1KaC6R6eaSzAhxpw8mM1LwNHMZHi7jFQTtgnwX23IxNC2ele_Pw_oWSCKSKYtUbYyTQD1WEMR8usQ" target="_blank">Carta</a></li>
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
             <a href="https://wa.me/56995775605?text=Hola!%20Quiero%20hacer%20un%20pedido%20de%20Café%20Huiti" class="nav-cta" target="_blank">
@@ -966,7 +984,7 @@
 </header>
 
 <!-- FONDO FIJO (PARALLAX) -->
-<img src="https://blogger.googleusercontent.com/img/a/AVvXsEgjPS8fcW7SX2Qeu18VnRA-quM789tTi-V5-In9nwJS-HH08KxmumBGrZ2q-pyh9k4eZ9UQIsyG3FC0HUN-DsoKJfOdlPxF6ooSDjlURUIyOXw4ui-mx8ZDsl9uYQ6Ww4m01XY-FZ_uuC_S81IXwSmywYMdKlSaLjmtgk2nkRGnaiZMwRP1-XhSI0WJ4AYL" style="position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; animation: zoomSlow 20s ease-in-out infinite alternate;" alt="Huití">
+<img src="https://blogger.googleusercontent.com/img/a/AVvXsEgjPS8fcW7SX2Qeu18VnRA-quM789tTi-V5-In9nwJS-HH08KxmumBGrZ2q-pyh9k4eZ9UQIsyG3FC0HUN-DsoKJfOdlPxF6ooSDjlURUIyOXw4ui-mx8ZDsl9uYQ6Ww4m01XY-FZ_uuC_S81IXwSmywYMdKlSaLjmtgk2nkRGnaiZMwRP1-XhSI0WJ4AYL" style="position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; animation: zoomSlow 20s ease-in-out infinite alternate;" alt="Huiti">
 
 <!-- HERO SECTION -->
 <section style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 80px 20px; position: relative; overflow: hidden;">
@@ -1099,43 +1117,7 @@
             <!-- INSTAGRAM FEED -->
             <div style="margin-bottom: 40px;">
                 <h4 style="color: #FFD700; margin-bottom: 20px; font-size: 1.1rem; font-weight: 500; text-shadow: 0 0 15px rgba(255,215,0,0.5);">Síguenos en Instagram</h4>
-                <!-- WIDGET INSTAGRAM -->
-<div style="max-width: 900px; margin: 0 auto; padding: 30px; background: rgba(26,21,18,0.8); border-radius: 30px; border: 2px solid #D4A574;">
-    <h4 style="color: #FFD700; text-align: center; margin-bottom: 30px; font-size: 1.5rem; font-weight: 700;">Nuestra Galería</h4>
-    
-    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
-        <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="position: relative; aspect-ratio: 1; border-radius: 20px; overflow: hidden; transition: all 0.4s; box-shadow: 0 10px 30px rgba(0,0,0,0.3);" onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 20px 50px rgba(212,165,116,0.5)'">
-            <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=400&fit=crop" style="width: 100%; height: 100%; object-fit: cover;" alt="Café latte">
-            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 30px 15px 15px;">
-                <span style="color: white; font-weight: 600; font-size: 14px;">Latte Art</span>
-            </div>
-        </a>
-        <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="position: relative; aspect-ratio: 1; border-radius: 20px; overflow: hidden; transition: all 0.4s; box-shadow: 0 10px 30px rgba(0,0,0,0.3);" onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 20px 50px rgba(212,165,116,0.5)'">
-            <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&h=400&fit=crop" style="width: 100%; height: 100%; object-fit: cover;" alt="Helado">
-            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 30px 15px 15px;">
-                <span style="color: white; font-weight: 600; font-size: 14px;">Helados</span>
-            </div>
-        </a>
-        <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="position: relative; aspect-ratio: 1; border-radius: 20px; overflow: hidden; transition: all 0.4s; box-shadow: 0 10px 30px rgba(0,0,0,0.3);" onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 20px 50px rgba(212,165,116,0.5)'">
-            <img src="https://images.unsplash.com/photo-1551024702-969f8b044106?w=400&h=400&fit=crop" style="width: 100%; height: 100%; object-fit: cover;" alt="Cupcake">
-            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 30px 15px 15px;">
-                <span style="color: white; font-weight: 600; font-size: 14px;">Cupcakes</span>
-            </div>
-        </a>
-        <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="position: relative; aspect-ratio: 1; border-radius: 20px; overflow: hidden; transition: all 0.4s; box-shadow: 0 10px 30px rgba(0,0,0,0.3);" onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 20px 50px rgba(212,165,116,0.5)'">
-            <img src="https://images.unsplash.com/photo-1488477181946-6428a0241793?w=400&h=400&fit=crop" style="width: 100%; height: 100%; object-fit: cover;" alt="Frappuccino">
-            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 30px 15px 15px;">
-                <span style="color: white; font-weight: 600; font-size: 14px;">Frappuccino</span>
-            </div>
-        </a>
-    </div>
-    
-    <div style="text-align: center; margin-top: 30px;">
-        <a href="https://www.instagram.com/tuwebpro360/" target="_blank" style="display: inline-flex; align-items: center; gap: 12px; background: linear-gradient(135deg, #E1306C, #C13584); color: white; padding: 15px 35px; border-radius: 30px; font-weight: 700; font-size: 16px; text-decoration: none; box-shadow: 0 10px 30px rgba(225,48,108,0.4); transition: all 0.3s;" onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 15px 40px rgba(225,48,108,0.6)'">
-            <i class="fab fa-instagram"></i> Síguenos @tuwebpro360
-        </a>
-    </div>
-</div>
+                
             </div>
             
             <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 30px;">
@@ -1191,19 +1173,18 @@
     </button>
 </div>
 
-<!-- CHATBOT TOGGLE -->
-<div class="chatbot-toggle" id="chatbotToggle">
-    <button onclick="toggleChatbot()">
-        <i class="fas fa-comment-dots chat-icon"></i>
-        <i class="fas fa-times close-icon"></i>
-    </button>
-</div>
-
-<!-- WHATSAPP FLOAT -->
+<!-- WHATSAPP FLOAT - Izquierda -->
 <div class="whatsapp-float">
-    <a href="https://wa.me/56995775605?text=Hola!%20Quiero%20más%20info%20de%20Café%20Huiti" target="_blank">
+    <a href="https://wa.me/56995775605?text=Hola!" target="_blank" style="display:flex;align-items:center;justify-content:center;width:60px;height:60px;background:linear-gradient(135deg,#25D366,#128C7E);border-radius:50%;color:white;font-size:26px;text-decoration:none;box-shadow:0 5px 20px rgba(37,211,102,0.5);">
         <i class="fab fa-whatsapp"></i>
     </a>
+</div>
+
+<!-- CHATBOT FIJO - Derecha -->
+<div style="position: fixed; bottom: 25px; right: 25px; z-index: 999;">
+    <button onclick="toggleChatbot()" style="width: 60px; height: 60px; background: linear-gradient(135deg, #5D4037, #D4A574); border: none; border-radius: 50%; color: white; font-size: 24px; cursor: pointer; box-shadow: 0 5px 20px rgba(0,0,0,0.3);">
+        💬
+    </button>
 </div>
 
 <script>
@@ -1236,12 +1217,17 @@
     });
 
     // Chatbot toggle
-    let chatAbierto = false;
+    let chatAbierto = true; // Habilitado por defecto
     function toggleChatbot() {
         chatAbierto = !chatAbierto;
         var panel = document.getElementById('chatPanel');
         panel.style.display = chatAbierto ? 'block' : 'none';
     }
+    
+    // Abrir chatbot automáticamente al cargar
+    window.onload = function() {
+        document.getElementById('chatPanel').style.display = 'block';
+    };
 
     function addMessage(text, type, quickReplies = null) {
         const messages = document.getElementById('chatMessages');
